@@ -255,7 +255,7 @@ function tm_login($user, $password) {
         $options['real_emails'] = $result['msg']["real_email_list"];
         update_option('tm_options', $options);
 
-        set_transient('tm_session_id', $result['msg']['session_id'], YEAR_IN_SECONDS);
+        set_transient('tm_session_id', $result['msg']['session_id'], MONTH_IN_SECONDS);
 
         return array(true, $result['msg']['session_id']);
     } else {
