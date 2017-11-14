@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: TrashMail Contact Me
-Plugin URI: https://sambull.org
+Plugin URI: https://github.com/AiondaDotCom/trashmail-wordpress-plugin
 Description: Generate unique disposable contact addresses for each visitor.
 Version: 1
 Author: Sam Bull
