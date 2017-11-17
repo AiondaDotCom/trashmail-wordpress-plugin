@@ -9,78 +9,78 @@ Author URI: https://sambull.org
 License: GPLv3+
 */
 
-function tm_settings_init() {
+function trashmail_settings_init() {
     // Register all our options for the settings page.
-    register_setting('tm-contact-me', 'tm_options');
-    add_settings_section('tm_section_login', __('Login', 'tm-contact-me'),
+    register_setting('tm-contact-me', 'trashmail_options');
+    add_settings_section('trashmail_section_login', __('Login', 'tm-contact-me'),
                          null, 'tm-contact-me');
-    add_settings_field('tm_username', __('Username', 'tm-contact-me'),
-                       'tm_username_render', 'tm-contact-me',
-                       'tm_section_login', ['label_for' => 'tm_username']);
-    add_settings_field('tm_password', __('Password', 'tm-contact-me'),
-                       'tm_password_render', 'tm-contact-me',
-                       'tm_section_login', ['label_for' => 'tm_password']);
-    add_settings_section('tm_section_settings', __('Settings', 'tm-contact-me'),
+    add_settings_field('trashmail_username', __('Username', 'tm-contact-me'),
+                       'trashmail_username_render', 'tm-contact-me',
+                       'trashmail_section_login', ['label_for' => 'trashmail_username']);
+    add_settings_field('trashmail_password', __('Password', 'tm-contact-me'),
+                       'trashmail_password_render', 'tm-contact-me',
+                       'trashmail_section_login', ['label_for' => 'trashmail_password']);
+    add_settings_section('trashmail_section_settings', __('Settings', 'tm-contact-me'),
                          null, 'tm-contact-me');
-    add_settings_field('tm_email', __('Your real email address', 'tm-contact-me'),
-                       'tm_email_render', 'tm-contact-me',
-                       'tm_section_settings', ['label_for' => 'tm_email']);
-    add_settings_field('tm_prefix', __('Email address prefix', 'tm-contact-me'),
-                       'tm_prefix_render', 'tm-contact-me',
-                       'tm_section_settings', ['label_for' => 'tm_prefix']);
-    add_settings_field('tm_length', __('Random alias length', 'tm-contact-me'),
-                       'tm_length_render', 'tm-contact-me',
-                       'tm_section_settings', ['label_for' => 'tm_length']);
-    add_settings_field('tm_domain', __('Email address domain', 'tm-contact-me'),
-                       'tm_domain_render', 'tm-contact-me',
-                       'tm_section_settings', ['label_for' => 'tm_domain']);
-    add_settings_field('tm_forwards', __('Number of forwards', 'tm-contact-me'),
-                       'tm_forwards_render', 'tm-contact-me',
-                       'tm_section_settings', ['label_for' => 'tm_forwards']);
-    add_settings_field('tm_expire', __('Life span', 'tm-contact-me'),
-                       'tm_expire_render', 'tm-contact-me',
-                       'tm_section_settings', ['label_for' => 'tm_expire']);
-    add_settings_field('tm_challenge', __('Challenge-Response System', 'tm-contact-me'),
-                       'tm_challenge_render', 'tm-contact-me',
-                       'tm_section_settings', ['label_for' => 'tm_challenge']);
-    add_settings_field('tm_masq', __('Reply-Masquerading', 'tm-contact-me'),
-                       'tm_masq_render', 'tm-contact-me',
-                       'tm_section_settings', ['label_for' => 'tm_masq']);
-    add_settings_field('tm_notify', __('Notify me when my account has expired', 'tm-contact-me'),
-                       'tm_notify_render', 'tm-contact-me',
-                       'tm_section_settings', ['label_for' => 'tm_notify']);
+    add_settings_field('trashmail_email', __('Your real email address', 'tm-contact-me'),
+                       'trashmail_email_render', 'tm-contact-me',
+                       'trashmail_section_settings', ['label_for' => 'trashmail_email']);
+    add_settings_field('trashmail_prefix', __('Email address prefix', 'tm-contact-me'),
+                       'trashmail_prefix_render', 'tm-contact-me',
+                       'trashmail_section_settings', ['label_for' => 'trashmail_prefix']);
+    add_settings_field('trashmail_length', __('Random alias length', 'tm-contact-me'),
+                       'trashmail_length_render', 'tm-contact-me',
+                       'trashmail_section_settings', ['label_for' => 'trashmail_length']);
+    add_settings_field('trashmail_domain', __('Email address domain', 'tm-contact-me'),
+                       'trashmail_domain_render', 'tm-contact-me',
+                       'trashmail_section_settings', ['label_for' => 'trashmail_domain']);
+    add_settings_field('trashmail_forwards', __('Number of forwards', 'tm-contact-me'),
+                       'trashmail_forwards_render', 'tm-contact-me',
+                       'trashmail_section_settings', ['label_for' => 'trashmail_forwards']);
+    add_settings_field('trashmail_expire', __('Life span', 'tm-contact-me'),
+                       'trashmail_expire_render', 'tm-contact-me',
+                       'trashmail_section_settings', ['label_for' => 'trashmail_expire']);
+    add_settings_field('trashmail_challenge', __('Challenge-Response System', 'tm-contact-me'),
+                       'trashmail_challenge_render', 'tm-contact-me',
+                       'trashmail_section_settings', ['label_for' => 'trashmail_challenge']);
+    add_settings_field('trashmail_masq', __('Reply-Masquerading', 'tm-contact-me'),
+                       'trashmail_masq_render', 'tm-contact-me',
+                       'trashmail_section_settings', ['label_for' => 'trashmail_masq']);
+    add_settings_field('trashmail_notify', __('Notify me when my account has expired', 'tm-contact-me'),
+                       'trashmail_notify_render', 'tm-contact-me',
+                       'trashmail_section_settings', ['label_for' => 'trashmail_notify']);
 
     // Add metabox to edit menu page
     add_meta_box('tm-contact-me', __('TrashMail Contact Me', 'tm-contact-me'),
-                 'tm_meta_box_render', 'nav-menus', 'side');
+                 'trashmail_meta_box_render', 'nav-menus', 'side');
 }
-add_action('admin_init', 'tm_settings_init');
+add_action('admin_init', 'trashmail_settings_init');
 
-function tm_username_render($args) {
-    $options = get_option('tm_options');
+function trashmail_username_render($args) {
+    $options = get_option('trashmail_options');
     ?>
     <input type="text" autocomplete="username" inputmode="verbatim" required
         id="<?= esc_attr($args['label_for']); ?>"
-        name="tm_options[<?= esc_attr($args['label_for']); ?>]"
+        name="trashmail_options[<?= esc_attr($args['label_for']); ?>]"
         value="<?= $options[$args['label_for']] ?>" />
     <?php
 }
 
-function tm_password_render($args) {
-    $options = get_option('tm_options');
+function trashmail_password_render($args) {
+    $options = get_option('trashmail_options');
     ?>
     <input type="password" autocomplete="current-password" minlength="6" required
         id="<?= esc_attr($args['label_for']); ?>"
-        name="tm_options[<?= esc_attr($args['label_for']); ?>]"
+        name="trashmail_options[<?= esc_attr($args['label_for']); ?>]"
         value="<?= $options[$args['label_for']] ?>" />
     <?php
 }
 
-function tm_email_render($args) {
-    $options = get_option('tm_options');
+function trashmail_email_render($args) {
+    $options = get_option('trashmail_options');
     ?>
     <select id="<?= esc_attr($args['label_for']); ?>"
-        name="tm_options[<?= esc_attr($args['label_for']); ?>]">
+        name="trashmail_options[<?= esc_attr($args['label_for']); ?>]">
     <?php
         foreach (array_keys($options['real_emails']) as $email) {
             ?>
@@ -91,31 +91,31 @@ function tm_email_render($args) {
     <?php
 }
 
-function tm_prefix_render($args) {
-    $options = get_option('tm_options');
+function trashmail_prefix_render($args) {
+    $options = get_option('trashmail_options');
     ?>
     <input type="text" inputmode="verbatim" maxlength="16"
         id="<?= esc_attr($args['label_for']); ?>"
-        name="tm_options[<?= esc_attr($args['label_for']); ?>]"
+        name="trashmail_options[<?= esc_attr($args['label_for']); ?>]"
         value="<?= $options[$args['label_for']] ?>" />
     <?php
 }
 
-function tm_length_render($args) {
-    $options = get_option('tm_options');
+function trashmail_length_render($args) {
+    $options = get_option('trashmail_options');
     ?>
     <input type="number" inputmode="verbatim" min="2" max="16"
         id="<?= esc_attr($args['label_for']); ?>"
-        name="tm_options[<?= esc_attr($args['label_for']); ?>]"
+        name="trashmail_options[<?= esc_attr($args['label_for']); ?>]"
         value="<?= $options[$args['label_for']] ?? 7 ?>" />
     <?php
 }
 
-function tm_domain_render($args) {
-    $options = get_option('tm_options');
+function trashmail_domain_render($args) {
+    $options = get_option('trashmail_options');
     ?>
     <select id="<?= esc_attr($args['label_for']); ?>"
-        name="tm_options[<?= esc_attr($args['label_for']); ?>]">
+        name="trashmail_options[<?= esc_attr($args['label_for']); ?>]">
     <?php
         foreach ($options['domains'] as $domain) {
             ?>
@@ -126,11 +126,11 @@ function tm_domain_render($args) {
     <?php
 }
 
-function tm_forwards_render($args) {
-    $options = get_option('tm_options');
+function trashmail_forwards_render($args) {
+    $options = get_option('trashmail_options');
     ?>
     <select id="<?= esc_attr($args['label_for']); ?>"
-        name="tm_options[<?= esc_attr($args['label_for']); ?>]">
+        name="trashmail_options[<?= esc_attr($args['label_for']); ?>]">
         <option value="1" <?php selected($options[$args['label_for']], 1); ?>>1</option>
         <option value="2" <?php selected($options[$args['label_for']], 2); ?>>2</option>
         <option value="3" <?php selected($options[$args['label_for']], 3); ?>>3</option>
@@ -144,11 +144,11 @@ function tm_forwards_render($args) {
     <?php
 }
 
-function tm_expire_render($args) {
-    $options = get_option('tm_options');
+function trashmail_expire_render($args) {
+    $options = get_option('trashmail_options');
     ?>
     <select id="<?= esc_attr($args['label_for']); ?>"
-        name="tm_options[<?= esc_attr($args['label_for']); ?>]">
+        name="trashmail_options[<?= esc_attr($args['label_for']); ?>]">
         <option value="1" <?php selected($options[$args['label_for']], 1); ?>>1 <?= __('day', 'tm-contact-me'); ?></option>
         <option value="2" <?php selected($options[$args['label_for']], 2); ?>>2 <?= __('days', 'tm-contact-me'); ?></option>
         <option value="3" <?php selected($options[$args['label_for']], 3); ?>>3 <?= __('days', 'tm-contact-me'); ?></option>
@@ -169,55 +169,55 @@ function tm_expire_render($args) {
     <?php
 }
 
-function tm_challenge_render($args) {
-    $options = get_option('tm_options');
+function trashmail_challenge_render($args) {
+    $options = get_option('trashmail_options');
     ?>
     <input type="checkbox" value="1" <?php checked(1, $options[$args['label_for']]); ?>
         id="<?= esc_attr($args['label_for']); ?>"
-        name="tm_options[<?= esc_attr($args['label_for']); ?>]" />
+        name="trashmail_options[<?= esc_attr($args['label_for']); ?>]" />
     <?php
 }
 
-function tm_masq_render($args) {
-    $options = get_option('tm_options');
+function trashmail_masq_render($args) {
+    $options = get_option('trashmail_options');
     ?>
     <input type="checkbox" value="1" <?php checked(1, $options[$args['label_for']]); ?>
         id="<?= esc_attr($args['label_for']); ?>"
-        name="tm_options[<?= esc_attr($args['label_for']); ?>]" />
+        name="trashmail_options[<?= esc_attr($args['label_for']); ?>]" />
     <?php
 }
 
-function tm_notify_render($args) {
-    $options = get_option('tm_options');
+function trashmail_notify_render($args) {
+    $options = get_option('trashmail_options');
     ?>
     <input type="checkbox" value="1" <?php checked(1, $options[$args['label_for']]); ?>
         id="<?= esc_attr($args['label_for']); ?>"
-        name="tm_options[<?= esc_attr($args['label_for']); ?>]" />
+        name="trashmail_options[<?= esc_attr($args['label_for']); ?>]" />
     <?php
 }
 
-function tm_options_page() {
+function trashmail_options_page() {
     add_submenu_page(
         'options-general.php', 'TrashMail Contact Me', 'TrashMail Options',
-        'manage_options', 'tm-contact-me', 'tm_options_page_render');
+        'manage_options', 'tm-contact-me', 'trashmail_options_page_render');
 }
-add_action('admin_menu', 'tm_options_page');
+add_action('admin_menu', 'trashmail_options_page');
 
 /** Displays our options page. */
-function tm_options_page_render() {
+function trashmail_options_page_render() {
     if (!current_user_can('manage_options'))
         return;
 
     if (isset($_GET['settings-updated'])) {
-        $options = get_option('tm_options');
-        $res = tm_login($options['tm_username'], $options['tm_password']);
+        $options = get_option('trashmail_options');
+        $res = trashmail_login($options['trashmail_username'], $options['trashmail_password']);
         if ($res[0] === true)
-            add_settings_error('tm_messages', 'tm_message', __('Settings Saved', 'tm-contact-me'), 'updated');
+            add_settings_error('trashmail_messages', 'trashmail_message', __('Settings Saved', 'tm-contact-me'), 'updated');
         else
-            add_settings_error('tm_messages', 'tm_message', $res[1]);
+            add_settings_error('trashmail_messages', 'trashmail_message', $res[1]);
     }
 
-    settings_errors('tm_messages');
+    settings_errors('trashmail_messages');
     ?>
     <div class="wrap">
         <h1><?= esc_html(get_admin_page_title()); ?></h1>
@@ -234,28 +234,28 @@ function tm_options_page_render() {
 }
 
 /** Add link to settings on plugin page. */
-function tm_add_action_links($links) {
+function trashmail_add_action_links($links) {
     $mylinks = array(
         '<a href="' . admin_url('options-general.php?page=tm-contact-me') . '">' . __('Settings') . '</a>',
     );
     return array_merge($links, $mylinks);
 }
-add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'tm_add_action_links');
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'trashmail_add_action_links');
 
 
 /** Log into TM and updates domains/real_emails. Sets and returns session id transient. */
-function tm_login($user, $password) {
+function trashmail_login($user, $password) {
     $url = 'https://trashmail.com/?api=1&cmd=login&fe-login-user=' . $user . '&fe-login-pass=' . $password;
     $result = wp_remote_post($url);
     $result = json_decode($result['body'], true);
 
     if ($result['success']) {
-        $options = get_option('tm_options');
+        $options = get_option('trashmail_options');
         $options['domains'] = $result['msg']['domain_name_list'];
         $options['real_emails'] = $result['msg']["real_email_list"];
-        update_option('tm_options', $options);
+        update_option('trashmail_options', $options);
 
-        set_transient('tm_session_id', $result['msg']['session_id'], MONTH_IN_SECONDS);
+        set_transient('trashmail_session_id', $result['msg']['session_id'], MONTH_IN_SECONDS);
 
         return array(true, $result['msg']['session_id']);
     } else {
@@ -265,7 +265,7 @@ function tm_login($user, $password) {
 
 
 /** The shortcode which will output our mailto link with required JS. */
-function tm_shortcode($atts) {
+function trashmail_shortcode($atts) {
     if ($_COOKIE['tm-contact-me']) {
         // Use previous address from cookie.
         $email = $_COOKIE['tm-contact-me'];
@@ -275,11 +275,11 @@ function tm_shortcode($atts) {
     $atts = shortcode_atts(array(
         'text' => __('Contact Me', 'tm-contact-me')
     ), $atts);
-    $options = get_option('tm_options');
+    $options = get_option('trashmail_options');
 
     $loading = __('Loading...', 'tm-contact-me');
     $domain = parse_url(get_home_url(), PHP_URL_HOST);
-    $age = ($options['tm_expire'] > 0) ? DAY_IN_SECONDS * $options['tm_expire'] : YEAR_IN_SECONDS;
+    $age = ($options['trashmail_expire'] > 0) ? DAY_IN_SECONDS * $options['trashmail_expire'] : YEAR_IN_SECONDS;
 
     $script = '
         event.preventDefault();
@@ -288,7 +288,7 @@ function tm_shortcode($atts) {
 
         var elem = this;
         let headers = new Headers({"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"});
-        let body = "action=tm_create_address&url=" + window.location.href;
+        let body = "action=trashmail_create_address&url=" + window.location.href;
         fetch("' . admin_url('admin-ajax.php') . '", {"method": "POST", "headers": headers, "body": body}).then(function (res) {
             return res.json();
         }).then(function (res) {
@@ -305,10 +305,10 @@ function tm_shortcode($atts) {
 
     return $output;
 }
-add_shortcode('tm_contact_me', 'tm_shortcode', 'tm-contact-me');
+add_shortcode('trashmail_contact_me', 'trashmail_shortcode', 'tm-contact-me');
 
 /** Generates the disposable name given a prefix and the number of random chars. */
-function _tm_generate_name($prefix, $length) {
+function _trashmail_generate_name($prefix, $length) {
     $chars = str_split('abcdefghijklmnopqrstuvwxyz0123456789');
     $name = $prefix;
     for ($i=0; $i < $length; ++$i)
@@ -318,11 +318,11 @@ function _tm_generate_name($prefix, $length) {
 }
 
 /** AJAX function that generates a new address and returns it to the JS code. */
-function tm_create_address($retry=false) {
-    $options = get_option('tm_options');
+function trashmail_create_address($retry=false) {
+    $options = get_option('trashmail_options');
 
-    if (($session_id = get_transient('tm_session_id')) === false) {
-        $res = tm_login($options['tm_username'], $options['tm_password']);
+    if (($session_id = get_transient('trashmail_session_id')) === false) {
+        $res = trashmail_login($options['trashmail_username'], $options['trashmail_password']);
         if ($res[0] === true) {
             $session_id = $res[1];
         } else {
@@ -333,14 +333,14 @@ function tm_create_address($retry=false) {
 
     $url = 'https://trashmail.com/?api=1&cmd=create_dea&session_id=' . $session_id;
     $data = array('data' => array(
-            'disposable_name' => _tm_generate_name($options['tm_prefix'] ?? '', $options['tm_length'] ?? 7),
-            'disposable_domain' => $options['tm_domain'] ?? 'trashmail.com',
-            'destination' => $options['tm_email'] ?? $options['real_emails'][0],
-            'forwards' => $options['tm_forwards'] ?? 1,
-            'expire' => $options['tm_expire'] ?? 1,
-            'cs' => $options['tm_challenge'] ?? false,
-            'masq' => $options['tm_masq'] ?? false,
-            'notify' => $options['tm_notify'] ?? false,
+            'disposable_name' => _trashmail_generate_name($options['trashmail_prefix'] ?? '', $options['trashmail_length'] ?? 7),
+            'disposable_domain' => $options['trashmail_domain'] ?? 'trashmail.com',
+            'destination' => $options['trashmail_email'] ?? $options['real_emails'][0],
+            'forwards' => $options['trashmail_forwards'] ?? 1,
+            'expire' => $options['trashmail_expire'] ?? 1,
+            'cs' => $options['trashmail_challenge'] ?? false,
+            'masq' => $options['trashmail_masq'] ?? false,
+            'notify' => $options['trashmail_notify'] ?? false,
             'desc' => 'Autogenerated by WordPress at: ' . $_POST['url'] ?? 'unknown URL'
         )
     );
@@ -353,16 +353,16 @@ function tm_create_address($retry=false) {
     } else {
         // Expired session ID
         if ($result['error_code'] == 2 && !$retry) {
-            delete_transient('tm_session_id');
-            return tm_create_address(true);
+            delete_transient('trashmail_session_id');
+            return trashmail_create_address(true);
         }
 
         echo json_encode(array(false, $result['msg']));
     }
     wp_die();
 }
-add_action('wp_ajax_tm_create_address', 'tm_create_address');
-add_action('wp_ajax_nopriv_tm_create_address', 'tm_create_address');
+add_action('wp_ajax_trashmail_create_address', 'trashmail_create_address');
+add_action('wp_ajax_nopriv_trashmail_create_address', 'trashmail_create_address');
 
 
 /*****
@@ -370,14 +370,14 @@ add_action('wp_ajax_nopriv_tm_create_address', 'tm_create_address');
  *****/
 
 /** Enqueue a script on edit menu page. */
-function tm_enqueue($hook) {
+function trashmail_enqueue($hook) {
     if ($hook == 'nav-menus.php')
         wp_enqueue_script('tm-admin-menu', plugin_dir_url(__FILE__) . 'admin-menu.js', array('nav-menu'));
 }
-add_action('admin_enqueue_scripts', 'tm_enqueue');
+add_action('admin_enqueue_scripts', 'trashmail_enqueue');
 
 /** Render the meta box to add our custom menu items. */
-function tm_meta_box_render() {
+function trashmail_meta_box_render() {
     global $_nav_menu_placeholder, $nav_menu_selected_id;
     $nav_menu_placeholder = $_nav_menu_placeholder < 0 ? $_nav_menu_placeholder - 1 : -1;
     ?>
@@ -398,20 +398,20 @@ function tm_meta_box_render() {
 }
 
 /** Customise the label displayed in the menu structure. */
-function tm_setup_menu_item($item) {
+function trashmail_setup_menu_item($item) {
     if (is_object($item) && $item->object == 'tm-contact-me')
         $item->type_label = __('TrashMail', 'tm-contact-me');
 
     return $item;
 }
-add_filter('wp_setup_nav_menu_item', 'tm_setup_menu_item');
+add_filter('wp_setup_nav_menu_item', 'trashmail_setup_menu_item');
 
 /** Customise the frontend output of our menu items. */
-function tm_menu_item_frontend($item_output, $item) {
+function trashmail_menu_item_frontend($item_output, $item) {
     if ($item->object == 'tm-contact-me')
-        return do_shortcode('[tm_contact_me text="' . $item->title . '"]');
+        return do_shortcode('[trashmail_contact_me text="' . $item->title . '"]');
 
     return $item_output;
 }
-add_filter('walker_nav_menu_start_el', 'tm_menu_item_frontend', 20, 2);
-add_filter('megamenu_walker_nav_menu_start_el', 'tm_menu_item_frontend', 20, 2);
+add_filter('walker_nav_menu_start_el', 'trashmail_menu_item_frontend', 20, 2);
+add_filter('megamenu_walker_nav_menu_start_el', 'trashmail_menu_item_frontend', 20, 2);
