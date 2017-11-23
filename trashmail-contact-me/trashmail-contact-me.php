@@ -3,7 +3,7 @@
 Plugin Name: TrashMail Contact Me
 Plugin URI: https://github.com/AiondaDotCom/trashmail-wordpress-plugin
 Description: Generate unique disposable contact addresses for each visitor.
-Version: 1
+Version: 1.1
 Author: Sam Bull
 Author URI: https://sambull.org
 License: GPLv3+
@@ -247,7 +247,12 @@ add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'trashmail_add_ac
 function trashmail_login($user, $password) {
     $url = 'https://trashmail.com/?api=1&cmd=login&fe-login-user=' . $user . '&fe-login-pass=' . $password;
     $result = wp_remote_post($url);
-    $result = json_decode($result['body'], true);
+    if (is_wp_error($result)) {
+        // Handle network errors
+        $result = array('success' => false, 'msg' => $result->get_error_message());
+    } else {
+        $result = json_decode($result['body'], true);
+    }
 
     if ($result['success']) {
         $options = get_option('trashmail_options');
@@ -301,7 +306,7 @@ function trashmail_shortcode($atts) {
             }
         });';
 
-    $output = '<a href="#" onclick=\'' . $script . '\'>' . $atts['text'] . '</a>';
+    $output = '<a href="?tm-contact-me=true" onclick=\'' . $script . '\'>' . $atts['text'] . '</a>';
 
     return $output;
 }
@@ -326,8 +331,7 @@ function trashmail_create_address($retry=false) {
         if ($res[0] === true) {
             $session_id = $res[1];
         } else {
-            echo json_encode(array(false, $res[1]));
-            wp_die();
+            return array(false, $res[1]);
         }
     }
 
@@ -345,11 +349,21 @@ function trashmail_create_address($retry=false) {
         )
     );
     $result = wp_remote_post($url, array('body' => json_encode($data)));
-    $result = json_decode($result['body'], true);
+    if (is_wp_error($result)) {
+        // Handle network errors
+        if (!$retry) {
+            delete_transient('trashmail_session_id');
+            return trashmail_create_address(true);
+        } else {
+            $result = array('success' => false, 'msg' => $result->get_error_message());
+        }
+    } else {
+        $result = json_decode($result['body'], true);
+    }
 
     if ($result['success']) {
         $email = $data['data']['disposable_name'] . '@' . $data['data']['disposable_domain'];
-        echo json_encode(array(true, $email));
+        return array(true, $email);
     } else {
         // Expired session ID
         if ($result['error_code'] == 2 && !$retry) {
@@ -357,12 +371,17 @@ function trashmail_create_address($retry=false) {
             return trashmail_create_address(true);
         }
 
-        echo json_encode(array(false, $result['msg']));
+        return array(false, $result['msg'] ?? $result['message']);
     }
+}
+
+
+function trashmail_ajax_create_address() {
+    echo json_encode(trashmail_create_address());
     wp_die();
 }
-add_action('wp_ajax_trashmail_create_address', 'trashmail_create_address');
-add_action('wp_ajax_nopriv_trashmail_create_address', 'trashmail_create_address');
+add_action('wp_ajax_trashmail_create_address', 'trashmail_ajax_create_address');
+add_action('wp_ajax_nopriv_trashmail_create_address', 'trashmail_ajax_create_address');
 
 
 /*****
@@ -415,3 +434,18 @@ function trashmail_menu_item_frontend($item_output, $item) {
 }
 add_filter('walker_nav_menu_start_el', 'trashmail_menu_item_frontend', 20, 2);
 add_filter('megamenu_walker_nav_menu_start_el', 'trashmail_menu_item_frontend', 20, 2);
+
+/** If JS disabled, generate address when link followed. */
+function trashmail_nojs() {
+    if (!empty($_GET['tm-contact-me']) && empty($_COOKIE['tm-contact-me'])) {
+        $result = trashmail_create_address();
+        if ($result[0]) {
+            $options = get_option('trashmail_options');
+            $age = ($options['trashmail_expire'] > 0) ? DAY_IN_SECONDS * $options['trashmail_expire'] : YEAR_IN_SECONDS;
+            $domain = parse_url(get_home_url(), PHP_URL_HOST);
+            setcookie('tm-contact-me', $result[1], time() + $age, '/', $domain);
+        }
+        $_COOKIE['tm-contact-me'] = $result[1];
+    }
+}
+add_action('send_headers', 'trashmail_nojs');

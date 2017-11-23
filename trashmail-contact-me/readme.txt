@@ -35,6 +35,9 @@ address, generated through the TrashMail service.
 = 1.0 =
 * Initial release.
 
+= 1.1 =
+* Now works when JavaScript is disabled.
+
 == Upgrade Notice ==
 
 .
