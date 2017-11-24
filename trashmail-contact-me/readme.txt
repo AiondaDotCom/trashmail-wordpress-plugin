@@ -32,11 +32,11 @@ address, generated through the TrashMail service.
 
 == Changelog ==
 
-= 1.0 =
-* Initial release.
-
 = 1.1 =
 * Now works when JavaScript is disabled.
+
+= 1.0 =
+* Initial release.
 
 == Upgrade Notice ==
 
