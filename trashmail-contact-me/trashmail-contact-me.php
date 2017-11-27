@@ -282,7 +282,7 @@ function trashmail_shortcode($atts) {
     ), $atts);
     $options = get_option('trashmail_options');
 
-    $loading = __('Loading...', 'tm-contact-me');
+    $loading = __('Loading&hellip;', 'tm-contact-me');
     $domain = parse_url(get_home_url(), PHP_URL_HOST);
     $age = ($options['trashmail_expire'] > 0) ? DAY_IN_SECONDS * $options['trashmail_expire'] : YEAR_IN_SECONDS;
 
